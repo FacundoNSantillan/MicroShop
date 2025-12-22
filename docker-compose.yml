@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: ./gateway
+    env_file: ./gateway/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - users
+      - products
+      - orders
+
+  users:
+    build: ./users
+    env_file: ./users/.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - users-db
+
+  products:
+    build: ./products
+    env_file: ./products/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      - products-db
+
+  orders:
+    build: ./orders
+    env_file: ./orders/.env
+    ports:
+      - "3003:3003"
+    depends_on:
+      - orders-db
+
+  users-db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users_db
+    ports:
+      - "5433:5432"
+
+  products-db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: products_db
+    ports:
+      - "5434:5432"
+
+  orders-db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: orders_db
+    ports:
+      - "5435:5432"
