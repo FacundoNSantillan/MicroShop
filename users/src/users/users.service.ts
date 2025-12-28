@@ -35,13 +35,6 @@ export class UsersService {
 
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     if (!user) {
@@ -69,7 +62,6 @@ export class UsersService {
     });
   }
 
-
   async remove(id: string) {
     const userId = Number(id);
 
@@ -79,4 +71,18 @@ export class UsersService {
       where: { id: userId },
     });
   }
+
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
+  async updateRefreshToken(userId: number, refreshToken: string | null) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { refreshToken },
+    });
+  }
+
 }
