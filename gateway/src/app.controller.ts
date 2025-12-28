@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Headers } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly http: HttpService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('users')
+  async getUsers(@Headers() headers: any) {
+    const response = await firstValueFrom(
+      this.http.get('http://users:3001/api/users', {
+        headers: {
+          authorization: headers.authorization,
+        },
+      }),
+    );
+
+    return response.data;
   }
 }
