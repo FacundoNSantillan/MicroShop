@@ -6,8 +6,8 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     PrismaModule, 
+    AuthModule,
     UsersModule, 
-    AuthModule
   ],
 })
 export class AppModule {}
