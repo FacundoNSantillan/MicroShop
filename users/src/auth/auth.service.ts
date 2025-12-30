@@ -11,7 +11,8 @@ export class AuthService {
   ) {}
 
   async login(email: string, password: string) {
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.usersService.findAuthUserByEmail(email);
+
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
@@ -24,7 +25,7 @@ export class AuthService {
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET || 'refresh-secret',
+      secret: process.env.JWT_REFRESH_SECRET || 'access-secret',
       expiresIn: '7d',
     });
 
@@ -36,7 +37,8 @@ export class AuthService {
   }
 
   async refresh(userId: number, refreshToken: string) {
-    const user = await this.usersService.findOne(userId.toString());
+  const user = await this.usersService.findAuthUserById(userId);
+
 
     if (!user || !user.refreshToken) {
       throw new UnauthorizedException();

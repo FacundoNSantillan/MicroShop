@@ -3,6 +3,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UserResponseDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,22 +20,23 @@ export class UsersService {
     });
   }
 
-  findAll() {
-    return this.prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-      },
-    });
+  async findAll() {
+    const users = await this.prisma.user.findMany();
+    return users.map(user => new UserResponseDto(user));
   }
+
 
   async findOne(id: string) {
     const userId = Number(id);
 
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+      },
     });
 
     if (!user) {
@@ -44,6 +46,11 @@ export class UsersService {
     return user;
   }
 
+  async findAuthUserById(id: number) {
+    return this.prisma.user.findUnique({
+      where: { id },
+    });
+  }
 
   async update(id: string, data: UpdateUserDto) {
     const userId = Number(id);
@@ -72,7 +79,7 @@ export class UsersService {
     });
   }
 
-  async findByEmail(email: string) {
+  async findAuthUserByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email },
     });
@@ -84,5 +91,16 @@ export class UsersService {
       data: { refreshToken },
     });
   }
+
+  async findByIdSafe(id: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) return null;
+
+    return new UserResponseDto(user);
+  }
+
 
 }
