@@ -14,6 +14,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -27,9 +28,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   me(@Req() req) {
-    return this.usersService.findByIdSafe(req.user.userId);
+    return req.user;
   }
 
+  @Roles('ADMIN')
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {

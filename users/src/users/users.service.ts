@@ -25,8 +25,7 @@ export class UsersService {
     return users.map(user => new UserResponseDto(user));
   }
 
-
-  async findOne(id: string) {
+  async findOne(id: string): Promise<UserResponseDto> {
     const userId = Number(id);
 
     const user = await this.prisma.user.findUnique({
@@ -35,7 +34,9 @@ export class UsersService {
         id: true,
         name: true,
         email: true,
+        role: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -43,7 +44,7 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    return user;
+    return new UserResponseDto(user);
   }
 
   async findAuthUserById(id: number) {
@@ -79,11 +80,12 @@ export class UsersService {
     });
   }
 
-  async findAuthUserByEmail(email: string) {
+  async findForAuthByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email },
     });
   }
+
 
   async updateRefreshToken(userId: number, refreshToken: string | null) {
     return this.prisma.user.update({
@@ -101,6 +103,5 @@ export class UsersService {
 
     return new UserResponseDto(user);
   }
-
 
 }
