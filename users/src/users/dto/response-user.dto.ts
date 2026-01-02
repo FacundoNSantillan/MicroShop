@@ -1,14 +1,5 @@
 import { Role } from '@prisma/client';
 
-export interface UserResponseProps {
-  id: number;
-  name: string;
-  email: string;
-  role: Role;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export class UserResponseDto {
   id: number;
   name: string;
@@ -17,7 +8,14 @@ export class UserResponseDto {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(user: UserResponseProps) {
+  constructor(user: {
+    id: number;
+    name: string;
+    email: string;
+    role: Role;
+    createdAt: Date;
+    updatedAt: Date;
+  }) {
     this.id = user.id;
     this.name = user.name;
     this.email = user.email;

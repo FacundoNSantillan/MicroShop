@@ -9,18 +9,20 @@ import { UserResponseDto } from './dto/response-user.dto';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: CreateUserDto) {
+  async create(data: CreateUserDto): Promise<UserResponseDto> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    return this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         ...data,
         password: hashedPassword,
       },
     });
+
+    return new UserResponseDto(user);
   }
 
-  async findAll() {
+  async findAll(): Promise<UserResponseDto[]> {
     const users = await this.prisma.user.findMany();
     return users.map(user => new UserResponseDto(user));
   }
@@ -53,7 +55,7 @@ export class UsersService {
     });
   }
 
-  async update(id: string, data: UpdateUserDto) {
+  async update(id: string, data: UpdateUserDto): Promise<UserResponseDto> {
     const userId = Number(id);
 
     await this.findOne(id);
@@ -64,10 +66,12 @@ export class UsersService {
       updateData.password = await bcrypt.hash(data.password, 10);
     }
 
-    return this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id: userId },
       data: updateData,
     });
+
+    return new UserResponseDto(user);
   }
 
   async remove(id: string) {
