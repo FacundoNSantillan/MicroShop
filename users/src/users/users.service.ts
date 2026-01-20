@@ -108,4 +108,10 @@ export class UsersService {
     return new UserResponseDto(user);
   }
 
+  async findById(id: number) {
+  return this.prisma.user.findUnique({
+    where: { id },
+  });
+  }
+
 }

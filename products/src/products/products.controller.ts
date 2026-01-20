@@ -18,6 +18,12 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @Get('internal/:id')
+  internalFindOne(@Param('id') id: string) {
+    return this.productsService.findById(+id);
+  }
+
+
   @Post()
   create(@Body() dto: CreateProductDto) {
     return this.productsService.create(dto);

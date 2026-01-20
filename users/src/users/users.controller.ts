@@ -21,6 +21,11 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('internal/:id')
+  internalFindOne(@Param('id') id: string) {
+    return this.usersService.findById(+id);
+  }
+
   @Post()
   create(@Body() dto: CreateUserDto) {
     return this.usersService.create(dto);
