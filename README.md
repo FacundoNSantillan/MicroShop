@@ -1,4 +1,4 @@
-# Microservices E-Commerce API
+# Microservicio E-Commerce API
 
 Backend de ejemplo basado en **arquitectura de microservicios** usando **NestJS**, **Docker**, **PostgreSQL** y **Prisma ORM**.
 
@@ -6,24 +6,18 @@ El sistema está compuesto por tres microservicios principales y un **API Gatewa
 
 ---
 
-# Arquitectura
+## Arquitectura
 
-Servicios incluidos:
-
-* **Gateway** → Punto de entrada único para el cliente
-* **Users Service** → Gestión de usuarios y autenticación
-* **Products Service** → Gestión de productos
-* **Orders Service** → Gestión de pedidos
-
-Arquitectura:
-
-Client
-↓
-Gateway (3000)
-↓
-Users (3001)
-Products (3002)
-Orders (3003)
+```
+        Client
+           │
+           ▼
+      Gateway (3000)
+           │
+ ┌─────────┼─────────┐
+ ▼         ▼         ▼
+Users    Products   Orders
+(3001)    (3002)    (3003)
 
 Cada servicio tiene:
 
@@ -31,7 +25,7 @@ Cada servicio tiene:
 * Prisma ORM
 * Swagger documentation
 * Docker container
-
+```
 ---
 
 # Tecnologías utilizadas
