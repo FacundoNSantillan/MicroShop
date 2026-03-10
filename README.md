@@ -18,6 +18,7 @@ El sistema está compuesto por tres microservicios principales y un **API Gatewa
  ▼         ▼         ▼
 Users    Products   Orders
 (3001)    (3002)    (3003)
+```
 
 Cada servicio tiene:
 
@@ -25,7 +26,7 @@ Cada servicio tiene:
 * Prisma ORM
 * Swagger documentation
 * Docker container
-```
+
 ---
 
 # Tecnologías utilizadas
@@ -374,6 +375,3 @@ Orders
 ```
 http://localhost:3003/orders/docs
 ```
-
-Facundo Santillan
-Bac
