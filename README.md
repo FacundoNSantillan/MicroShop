@@ -96,9 +96,6 @@ DATABASE_URL="AQUI_TU_DATABASE_URL"
 
 PORT=3001
 
-JWT_SECRET="AQUI_TU_SECRET"
-
-JWT_EXPIRES_IN="AQUI_TU_TIEMPO"
 ```
 
 ---
@@ -160,8 +157,8 @@ PORT=3000
 Clonar el repositorio:
 
 ```
-git clone TU_REPO
-cd microshop
+git clone https://github.com/FacundoNSantillan/MicroShop.git
+cd MicroShop
 ```
 
 Instalar dependencias en cada servicio:
@@ -369,13 +366,13 @@ Ejemplo:
 Users
 
 ```
-http://localhost:3001/api/docs
+http://localhost:3001/users/docs
 ```
 
 Products
 
 ```
-http://localhost:3002/api/docs
+http://localhost:3002/products/docs
 ```
 
 Orders
