@@ -1,6 +1,6 @@
 # Microservicio E-Commerce API
 
-Backend de ejemplo basado en **arquitectura de microservicios** usando **NestJS**, **Docker**, **PostgreSQL** y **Prisma ORM**.
+Backend basado en **arquitectura de microservicios** usando **NestJS**, **Docker**, **PostgreSQL** y **Prisma ORM**.
 
 El sistema está compuesto por tres microservicios principales y un **API Gateway** que centraliza todas las peticiones.
 
